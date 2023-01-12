@@ -9,14 +9,14 @@ const Header = (props: Props) => {
       <div className="mx-auto max-w-full md:px-32 sm:px-8 px-8">
         <div className="flex items-center  justify-between py-4 md:justify-start">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#">
+            <Link to={`/`}>
               <span className="sr-only">Your Company</span>
               <img
-                className="h-8 sm:text-left	"
+                className="h-12 sm:text-left	"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt=""
               />
-            </a>
+            </Link>
           </div>
           <div className="items-center justify-end md:flex md:flex-1">
             <Link to={`/`}
