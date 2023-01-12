@@ -1,10 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form';
 type Props = {}
 
 const Upload = (props: Props) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<any>();
     const [image, setImage] = useState("") 
     const changData = (event: any) => {
         setImage(event.target.files[0])
