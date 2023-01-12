@@ -1,32 +1,37 @@
 import axios from 'axios';
-import React from 'react'
-
+import React, { useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form';
 type Props = {}
 
 const Upload = (props: Props) => {
-    const [uploadedImage, setUploadedImage] = React.useState("");
-    const [name, setName] = React.useState("")
-    const fileSelectedHandler = (event: any) => {
-        console.log(event.target.files[0]);
-        setUploadedImage(event.target.files[0]);
-        setName(event.target.files[0].name)
+    const { register, handleSubmit, formState: { errors } } = useForm<any>();
+    const [image, setImage] = useState("") 
+    const changData = (event: any) => {
+        setImage(event.target.files[0])
     }
-    console.log(name);
-    
-    const fileUploadHandler = () => {
-        const fd = new FormData();
-        fd.append('image', uploadedImage, name)
-        axios.post('https://image-uploader-anhhtus.herokuapp.com/api/upload', fd)
-            .then(res => {
-                console.log(res);
+    const onSubmit = async (data: any) => {
+        const CLOUDINARY_PRESET = "jkbdphzy";
+        const CLOUDINARY_API_URL = "https://api.cloudinary.com/v1_1/ecommercer2021/image/upload";
+        if (image) {
+            const formData = new FormData();
+            formData.append('file', image);
+            formData.append('upload_preset', CLOUDINARY_PRESET);
+            const img = await axios.post(CLOUDINARY_API_URL, formData, {
+                headers: {
+                    "Content-Type": "application/form-data"
+                },
             });
+            data.image = img.data.url;
+        }
+        console.log(data.image);
     }
-  return (
-    <div>
-        <input type="file" onChange={fileSelectedHandler} />
-        <button onClick={fileUploadHandler}>Upload</button>
-    </div>
-  )
+    return (
+        <div>
+            <img src="" alt="" />
+            <input type="file" onChange={changData} />
+            <button onClick={onSubmit}>Save</button>
+        </div>
+    )
 }
 
 export default Upload
